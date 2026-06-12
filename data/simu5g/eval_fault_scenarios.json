@@ -1,0 +1,572 @@
+[
+  {
+    "scenario_id": "EVAL_01",
+    "fault_type": "HO_FAILURE",
+    "cell": "Cell-11",
+    "timestamp": "2024-03-01 00:00 UTC",
+    "description": "A3 offset too aggressive, handover failure rate increased",
+    "anomaly_vector": {
+      "ho_sr_dev": -31.25,
+      "rsrp_dev": -2.4,
+      "rsrq_dev": 0.0,
+      "sinr_dev": -2.0,
+      "throughput_dev": -3.75,
+      "prb_dev": 2.143,
+      "latency_dev": 0.0,
+      "rrc_sr_dev": 0.0,
+      "rrc_reest_dev": 40.0,
+      "rlf_dev": 50.0,
+      "prach_fail_dev": 0.0,
+      "connected_ues_dev": 0.0,
+      "ul_timing_err_dev": 0.0
+    },
+    "expected_clauses": [
+      "TS 38.331 Section 5.5.4",
+      "TS 38.331 Section 5.3.3",
+      "TS 38.321 Section 5.1"
+    ],
+    "query": "Why is ho failure occurring at Cell-11? KPI deviations: ho_sr_dev=-31.25, rsrp_dev=-2.40, rsrq_dev=+0.00, sinr_dev=-2.00"
+  },
+  {
+    "scenario_id": "EVAL_02",
+    "fault_type": "PRB_CONGESTION",
+    "cell": "Cell-45",
+    "timestamp": "2024-03-01 12:00 UTC",
+    "description": "PRB utilization exceeded 90%, throughput severely degraded",
+    "anomaly_vector": {
+      "ho_sr_dev": -12.5,
+      "rsrp_dev": 0.0,
+      "rsrq_dev": -2.0,
+      "sinr_dev": -1.0,
+      "throughput_dev": -6.25,
+      "prb_dev": 6.429,
+      "latency_dev": 26.667,
+      "rrc_sr_dev": 0.0,
+      "rrc_reest_dev": 0.0,
+      "rlf_dev": 0.0,
+      "prach_fail_dev": 0.0,
+      "connected_ues_dev": 0.0,
+      "ul_timing_err_dev": 0.0
+    },
+    "expected_clauses": [
+      "TS 38.214 Section 5.1",
+      "TS 38.321 Section 5.4",
+      "TS 38.213 Section 9"
+    ],
+    "query": "Why is prb congestion occurring at Cell-45? KPI deviations: ho_sr_dev=-12.50, rsrp_dev=+0.00, rsrq_dev=-2.00, sinr_dev=-1.00"
+  },
+  {
+    "scenario_id": "EVAL_03",
+    "fault_type": "PRACH_CONGESTION",
+    "cell": "Cell-29",
+    "timestamp": "2024-03-02 00:00 UTC",
+    "description": "RRC connection setup failure spike, RACH preamble collision rate high",
+    "anomaly_vector": {
+      "ho_sr_dev": -6.25,
+      "rsrp_dev": 0.0,
+      "rsrq_dev": 0.0,
+      "sinr_dev": 0.0,
+      "throughput_dev": -2.5,
+      "prb_dev": 0.0,
+      "latency_dev": 15.0,
+      "rrc_sr_dev": -60.0,
+      "rrc_reest_dev": 0.0,
+      "rlf_dev": 0.0,
+      "prach_fail_dev": 70.0,
+      "connected_ues_dev": 0.0,
+      "ul_timing_err_dev": 0.0
+    },
+    "expected_clauses": [
+      "TS 38.321 Section 5.1",
+      "TS 38.331 Section 5.3.3",
+      "TS 38.213 Section 8"
+    ],
+    "query": "Why is prach congestion occurring at Cell-29? KPI deviations: ho_sr_dev=-6.25, rsrp_dev=+0.00, rsrq_dev=+0.00, sinr_dev=+0.00"
+  },
+  {
+    "scenario_id": "EVAL_04",
+    "fault_type": "INTERFERENCE",
+    "cell": "Cell-23",
+    "timestamp": "2024-03-02 12:00 UTC",
+    "description": "High inter-cell interference from neighbour, SINR and RSRQ degraded",
+    "anomaly_vector": {
+      "ho_sr_dev": 0.0,
+      "rsrp_dev": -1.6,
+      "rsrq_dev": -3.0,
+      "sinr_dev": -3.333,
+      "throughput_dev": -4.375,
+      "prb_dev": 2.857,
+      "latency_dev": 0.0,
+      "rrc_sr_dev": 0.0,
+      "rrc_reest_dev": 0.0,
+      "rlf_dev": 40.0,
+      "prach_fail_dev": 0.0,
+      "connected_ues_dev": 0.0,
+      "ul_timing_err_dev": 0.0
+    },
+    "expected_clauses": [
+      "TS 38.214 Section 5.2",
+      "TS 38.401 Section 8.3",
+      "TS 38.423 Section 8"
+    ],
+    "query": "Why is interference occurring at Cell-23? KPI deviations: ho_sr_dev=+0.00, rsrp_dev=-1.60, rsrq_dev=-3.00, sinr_dev=-3.33"
+  },
+  {
+    "scenario_id": "EVAL_05",
+    "fault_type": "RLF_SPIKE",
+    "cell": "Cell-29",
+    "timestamp": "2024-03-03 00:00 UTC",
+    "description": "Radio link failure spike, frequent RLF events due to coverage hole",
+    "anomaly_vector": {
+      "ho_sr_dev": -25.0,
+      "rsrp_dev": -3.0,
+      "rsrq_dev": 0.0,
+      "sinr_dev": -2.667,
+      "throughput_dev": -5.0,
+      "prb_dev": 0.0,
+      "latency_dev": 0.0,
+      "rrc_sr_dev": 0.0,
+      "rrc_reest_dev": 50.0,
+      "rlf_dev": 100.0,
+      "prach_fail_dev": 0.0,
+      "connected_ues_dev": 0.0,
+      "ul_timing_err_dev": 0.0
+    },
+    "expected_clauses": [
+      "TS 38.331 Section 5.3.10",
+      "TS 38.321 Section 5.3",
+      "TS 38.331 Section 5.3.7"
+    ],
+    "query": "Why is rlf spike occurring at Cell-29? KPI deviations: ho_sr_dev=-25.00, rsrp_dev=-3.00, rsrq_dev=+0.00, sinr_dev=-2.67"
+  },
+  {
+    "scenario_id": "EVAL_06",
+    "fault_type": "BEAM_FAILURE",
+    "cell": "Cell-03",
+    "timestamp": "2024-03-03 12:00 UTC",
+    "description": "Beam failure recovery triggered repeatedly, UE-gNB beam alignment lost",
+    "anomaly_vector": {
+      "ho_sr_dev": -18.75,
+      "rsrp_dev": -2.8,
+      "rsrq_dev": 0.0,
+      "sinr_dev": -3.0,
+      "throughput_dev": -5.625,
+      "prb_dev": 0.0,
+      "latency_dev": 0.0,
+      "rrc_sr_dev": 0.0,
+      "rrc_reest_dev": 0.0,
+      "rlf_dev": 33.333,
+      "prach_fail_dev": 0.0,
+      "connected_ues_dev": 0.0,
+      "ul_timing_err_dev": 0.0
+    },
+    "expected_clauses": [
+      "TS 38.213 Section 6",
+      "TS 38.331 Section 5.17",
+      "TS 38.213 Section 9.1"
+    ],
+    "query": "Why is beam failure occurring at Cell-03? KPI deviations: ho_sr_dev=-18.75, rsrp_dev=-2.80, rsrq_dev=+0.00, sinr_dev=-3.00"
+  },
+  {
+    "scenario_id": "EVAL_07",
+    "fault_type": "PDCP_DELAY",
+    "cell": "Cell-47",
+    "timestamp": "2024-03-04 00:00 UTC",
+    "description": "PDCP reordering buffer overflow causing latency spike",
+    "anomaly_vector": {
+      "ho_sr_dev": 0.0,
+      "rsrp_dev": 0.0,
+      "rsrq_dev": 0.0,
+      "sinr_dev": -0.667,
+      "throughput_dev": -3.125,
+      "prb_dev": 1.429,
+      "latency_dev": 40.0,
+      "rrc_sr_dev": 0.0,
+      "rrc_reest_dev": 0.0,
+      "rlf_dev": 0.0,
+      "prach_fail_dev": 0.0,
+      "connected_ues_dev": 0.0,
+      "ul_timing_err_dev": 0.0
+    },
+    "expected_clauses": [
+      "TS 38.323 Section 4.2",
+      "TS 38.323 Section 5.4",
+      "TS 38.331 Section 9.3"
+    ],
+    "query": "Why is pdcp delay occurring at Cell-47? KPI deviations: ho_sr_dev=+0.00, rsrp_dev=+0.00, rsrq_dev=+0.00, sinr_dev=-0.67"
+  },
+  {
+    "scenario_id": "EVAL_08",
+    "fault_type": "UE_MASS_DETACH",
+    "cell": "Cell-23",
+    "timestamp": "2024-03-04 12:00 UTC",
+    "description": "Mass UE detachment event, MME/AMF overload suspected",
+    "anomaly_vector": {
+      "ho_sr_dev": 0.0,
+      "rsrp_dev": 0.0,
+      "rsrq_dev": 0.0,
+      "sinr_dev": 0.0,
+      "throughput_dev": -6.875,
+      "prb_dev": -4.286,
+      "latency_dev": 0.0,
+      "rrc_sr_dev": -80.0,
+      "rrc_reest_dev": 0.0,
+      "rlf_dev": 0.0,
+      "prach_fail_dev": 0.0,
+      "connected_ues_dev": -7.5,
+      "ul_timing_err_dev": 0.0
+    },
+    "expected_clauses": [
+      "TS 38.413 Section 8.6",
+      "TS 38.401 Section 8.2",
+      "TS 38.331 Section 5.3.3"
+    ],
+    "query": "Why is ue mass detach occurring at Cell-23? KPI deviations: ho_sr_dev=+0.00, rsrp_dev=+0.00, rsrq_dev=+0.00, sinr_dev=+0.00"
+  },
+  {
+    "scenario_id": "EVAL_09",
+    "fault_type": "TIMING_DRIFT",
+    "cell": "Cell-40",
+    "timestamp": "2024-03-05 00:00 UTC",
+    "description": "Timing advance drift detected, uplink synchronization degraded",
+    "anomaly_vector": {
+      "ho_sr_dev": -15.0,
+      "rsrp_dev": 0.0,
+      "rsrq_dev": 0.0,
+      "sinr_dev": -1.333,
+      "throughput_dev": -2.5,
+      "prb_dev": 0.0,
+      "latency_dev": 0.0,
+      "rrc_sr_dev": 0.0,
+      "rrc_reest_dev": 0.0,
+      "rlf_dev": 26.667,
+      "prach_fail_dev": 0.0,
+      "connected_ues_dev": 0.0,
+      "ul_timing_err_dev": 40.0
+    },
+    "expected_clauses": [
+      "TS 38.213 Section 4.2",
+      "TS 38.321 Section 5.2",
+      "TS 38.331 Section 5.3.3"
+    ],
+    "query": "Why is timing drift occurring at Cell-40? KPI deviations: ho_sr_dev=-15.00, rsrp_dev=+0.00, rsrq_dev=+0.00, sinr_dev=-1.33"
+  },
+  {
+    "scenario_id": "EVAL_10",
+    "fault_type": "CAPACITY_OVERFLOW",
+    "cell": "Cell-28",
+    "timestamp": "2024-03-05 12:00 UTC",
+    "description": "Cell capacity limit reached, new UE admission blocked by ACB",
+    "anomaly_vector": {
+      "ho_sr_dev": 0.0,
+      "rsrp_dev": 0.0,
+      "rsrq_dev": 0.0,
+      "sinr_dev": 0.0,
+      "throughput_dev": -4.375,
+      "prb_dev": 5.714,
+      "latency_dev": 20.0,
+      "rrc_sr_dev": -50.0,
+      "rrc_reest_dev": 0.0,
+      "rlf_dev": 0.0,
+      "prach_fail_dev": 0.0,
+      "connected_ues_dev": 4.375,
+      "ul_timing_err_dev": 0.0
+    },
+    "expected_clauses": [
+      "TS 38.331 Section 5.3.14",
+      "TS 38.321 Section 5.4.5",
+      "TS 38.213 Section 9"
+    ],
+    "query": "Why is capacity overflow occurring at Cell-28? KPI deviations: ho_sr_dev=+0.00, rsrp_dev=+0.00, rsrq_dev=+0.00, sinr_dev=+0.00"
+  },
+  {
+    "scenario_id": "EVAL_11",
+    "fault_type": "RLF_SPIKE+HO_FAILURE",
+    "cell": "Cell-05",
+    "timestamp": "2024-03-15 00:00 UTC",
+    "description": "Co-occurring: Radio link failure spike, frequent RLF events due to coverage hole AND A3 offset too aggressive, handover failure rate increased",
+    "anomaly_vector": {
+      "ho_sr_dev": -40.625,
+      "rsrp_dev": -4.2,
+      "rsrq_dev": 0.0,
+      "sinr_dev": -3.667,
+      "throughput_dev": -6.875,
+      "prb_dev": 1.071,
+      "latency_dev": 0.0,
+      "rrc_sr_dev": 0.0,
+      "rrc_reest_dev": 70.0,
+      "rlf_dev": 125.0,
+      "prach_fail_dev": 0.0,
+      "connected_ues_dev": 0.0,
+      "ul_timing_err_dev": 0.0
+    },
+    "expected_clauses": [
+      "TS 38.321 Section 5.3",
+      "TS 38.321 Section 5.1",
+      "TS 38.331 Section 5.3.10",
+      "TS 38.331 Section 5.5.4"
+    ],
+    "query": "Co-occurring RLF_SPIKE and HO_FAILURE at Cell-05."
+  },
+  {
+    "scenario_id": "EVAL_12",
+    "fault_type": "PDCP_DELAY+BEAM_FAILURE",
+    "cell": "Cell-33",
+    "timestamp": "2024-03-15 08:00 UTC",
+    "description": "Co-occurring: PDCP reordering buffer overflow causing latency spike AND Beam failure recovery triggered repeatedly, UE-gNB beam alignment lost",
+    "anomaly_vector": {
+      "ho_sr_dev": -9.375,
+      "rsrp_dev": -1.4,
+      "rsrq_dev": 0.0,
+      "sinr_dev": -2.167,
+      "throughput_dev": -5.937,
+      "prb_dev": 1.429,
+      "latency_dev": 40.0,
+      "rrc_sr_dev": 0.0,
+      "rrc_reest_dev": 0.0,
+      "rlf_dev": 16.667,
+      "prach_fail_dev": 0.0,
+      "connected_ues_dev": 0.0,
+      "ul_timing_err_dev": 0.0
+    },
+    "expected_clauses": [
+      "TS 38.323 Section 5.4",
+      "TS 38.213 Section 9.1",
+      "TS 38.331 Section 9.3",
+      "TS 38.213 Section 6"
+    ],
+    "query": "Co-occurring PDCP_DELAY and BEAM_FAILURE at Cell-33."
+  },
+  {
+    "scenario_id": "EVAL_13",
+    "fault_type": "PRACH_CONGESTION+HO_FAILURE",
+    "cell": "Cell-10",
+    "timestamp": "2024-03-15 16:00 UTC",
+    "description": "Co-occurring: RRC connection setup failure spike, RACH preamble collision rate high AND A3 offset too aggressive, handover failure rate increased",
+    "anomaly_vector": {
+      "ho_sr_dev": -21.875,
+      "rsrp_dev": -1.2,
+      "rsrq_dev": 0.0,
+      "sinr_dev": -1.0,
+      "throughput_dev": -4.375,
+      "prb_dev": 1.071,
+      "latency_dev": 15.0,
+      "rrc_sr_dev": -60.0,
+      "rrc_reest_dev": 20.0,
+      "rlf_dev": 25.0,
+      "prach_fail_dev": 70.0,
+      "connected_ues_dev": 0.0,
+      "ul_timing_err_dev": 0.0
+    },
+    "expected_clauses": [
+      "TS 38.331 Section 5.5.4",
+      "TS 38.331 Section 5.3.3",
+      "TS 38.321 Section 5.1",
+      "TS 38.213 Section 8"
+    ],
+    "query": "Co-occurring PRACH_CONGESTION and HO_FAILURE at Cell-10."
+  },
+  {
+    "scenario_id": "EVAL_14",
+    "fault_type": "CAPACITY_OVERFLOW+UE_MASS_DETACH",
+    "cell": "Cell-03",
+    "timestamp": "2024-03-16 00:00 UTC",
+    "description": "Co-occurring: Cell capacity limit reached, new UE admission blocked by ACB AND Mass UE detachment event, MME/AMF overload suspected",
+    "anomaly_vector": {
+      "ho_sr_dev": 0.0,
+      "rsrp_dev": 0.0,
+      "rsrq_dev": 0.0,
+      "sinr_dev": 0.0,
+      "throughput_dev": -7.812,
+      "prb_dev": 3.571,
+      "latency_dev": 20.0,
+      "rrc_sr_dev": -90.0,
+      "rrc_reest_dev": 0.0,
+      "rlf_dev": 0.0,
+      "prach_fail_dev": 0.0,
+      "connected_ues_dev": 0.625,
+      "ul_timing_err_dev": 0.0
+    },
+    "expected_clauses": [
+      "TS 38.413 Section 8.6",
+      "TS 38.401 Section 8.2",
+      "TS 38.331 Section 5.3.3",
+      "TS 38.213 Section 9"
+    ],
+    "query": "Co-occurring CAPACITY_OVERFLOW and UE_MASS_DETACH at Cell-03."
+  },
+  {
+    "scenario_id": "EVAL_15",
+    "fault_type": "PRACH_CONGESTION+PRB_CONGESTION",
+    "cell": "Cell-16",
+    "timestamp": "2024-03-16 08:00 UTC",
+    "description": "Co-occurring: RRC connection setup failure spike, RACH preamble collision rate high AND PRB utilization exceeded 90%, throughput severely degraded",
+    "anomaly_vector": {
+      "ho_sr_dev": -12.5,
+      "rsrp_dev": 0.0,
+      "rsrq_dev": -1.0,
+      "sinr_dev": -0.5,
+      "throughput_dev": -5.625,
+      "prb_dev": 3.214,
+      "latency_dev": 28.333,
+      "rrc_sr_dev": -60.0,
+      "rrc_reest_dev": 0.0,
+      "rlf_dev": 0.0,
+      "prach_fail_dev": 70.0,
+      "connected_ues_dev": 0.0,
+      "ul_timing_err_dev": 0.0
+    },
+    "expected_clauses": [
+      "TS 38.321 Section 5.1",
+      "TS 38.213 Section 8",
+      "TS 38.321 Section 5.4",
+      "TS 38.214 Section 5.1"
+    ],
+    "query": "Co-occurring PRACH_CONGESTION and PRB_CONGESTION at Cell-16."
+  },
+  {
+    "scenario_id": "EVAL_16",
+    "fault_type": "BEAM_FAILURE+CAPACITY_OVERFLOW",
+    "cell": "Cell-25",
+    "timestamp": "2024-03-16 16:00 UTC",
+    "description": "Co-occurring: Beam failure recovery triggered repeatedly, UE-gNB beam alignment lost AND Cell capacity limit reached, new UE admission blocked by ACB",
+    "anomaly_vector": {
+      "ho_sr_dev": -18.75,
+      "rsrp_dev": -2.8,
+      "rsrq_dev": 0.0,
+      "sinr_dev": -3.0,
+      "throughput_dev": -7.812,
+      "prb_dev": 2.857,
+      "latency_dev": 10.0,
+      "rrc_sr_dev": -25.0,
+      "rrc_reest_dev": 0.0,
+      "rlf_dev": 33.333,
+      "prach_fail_dev": 0.0,
+      "connected_ues_dev": 2.187,
+      "ul_timing_err_dev": 0.0
+    },
+    "expected_clauses": [
+      "TS 38.321 Section 5.4.5",
+      "TS 38.213 Section 9",
+      "TS 38.331 Section 5.3.14",
+      "TS 38.213 Section 9.1"
+    ],
+    "query": "Co-occurring BEAM_FAILURE and CAPACITY_OVERFLOW at Cell-25."
+  },
+  {
+    "scenario_id": "EVAL_17",
+    "fault_type": "CAPACITY_OVERFLOW+HO_FAILURE",
+    "cell": "Cell-39",
+    "timestamp": "2024-03-17 00:00 UTC",
+    "description": "Co-occurring: Cell capacity limit reached, new UE admission blocked by ACB AND A3 offset too aggressive, handover failure rate increased",
+    "anomaly_vector": {
+      "ho_sr_dev": -15.625,
+      "rsrp_dev": -1.2,
+      "rsrq_dev": 0.0,
+      "sinr_dev": -1.0,
+      "throughput_dev": -6.25,
+      "prb_dev": 6.786,
+      "latency_dev": 20.0,
+      "rrc_sr_dev": -50.0,
+      "rrc_reest_dev": 20.0,
+      "rlf_dev": 25.0,
+      "prach_fail_dev": 0.0,
+      "connected_ues_dev": 4.375,
+      "ul_timing_err_dev": 0.0
+    },
+    "expected_clauses": [
+      "TS 38.321 Section 5.1",
+      "TS 38.331 Section 5.3.3",
+      "TS 38.331 Section 5.5.4",
+      "TS 38.213 Section 9"
+    ],
+    "query": "Co-occurring CAPACITY_OVERFLOW and HO_FAILURE at Cell-39."
+  },
+  {
+    "scenario_id": "EVAL_18",
+    "fault_type": "PRACH_CONGESTION+UE_MASS_DETACH",
+    "cell": "Cell-24",
+    "timestamp": "2024-03-17 08:00 UTC",
+    "description": "Co-occurring: RRC connection setup failure spike, RACH preamble collision rate high AND Mass UE detachment event, MME/AMF overload suspected",
+    "anomaly_vector": {
+      "ho_sr_dev": -6.25,
+      "rsrp_dev": 0.0,
+      "rsrq_dev": 0.0,
+      "sinr_dev": 0.0,
+      "throughput_dev": -5.937,
+      "prb_dev": -2.143,
+      "latency_dev": 15.0,
+      "rrc_sr_dev": -100.0,
+      "rrc_reest_dev": 0.0,
+      "rlf_dev": 0.0,
+      "prach_fail_dev": 70.0,
+      "connected_ues_dev": -3.75,
+      "ul_timing_err_dev": 0.0
+    },
+    "expected_clauses": [
+      "TS 38.413 Section 8.6",
+      "TS 38.321 Section 5.1",
+      "TS 38.213 Section 8",
+      "TS 38.401 Section 8.2"
+    ],
+    "query": "Co-occurring PRACH_CONGESTION and UE_MASS_DETACH at Cell-24."
+  },
+  {
+    "scenario_id": "EVAL_19",
+    "fault_type": "BEAM_FAILURE+UE_MASS_DETACH",
+    "cell": "Cell-49",
+    "timestamp": "2024-03-17 16:00 UTC",
+    "description": "Co-occurring: Beam failure recovery triggered repeatedly, UE-gNB beam alignment lost AND Mass UE detachment event, MME/AMF overload suspected",
+    "anomaly_vector": {
+      "ho_sr_dev": -18.75,
+      "rsrp_dev": -2.8,
+      "rsrq_dev": 0.0,
+      "sinr_dev": -3.0,
+      "throughput_dev": -9.062,
+      "prb_dev": -2.143,
+      "latency_dev": 0.0,
+      "rrc_sr_dev": -40.0,
+      "rrc_reest_dev": 0.0,
+      "rlf_dev": 33.333,
+      "prach_fail_dev": 0.0,
+      "connected_ues_dev": -3.75,
+      "ul_timing_err_dev": 0.0
+    },
+    "expected_clauses": [
+      "TS 38.413 Section 8.6",
+      "TS 38.401 Section 8.2",
+      "TS 38.331 Section 5.3.3",
+      "TS 38.213 Section 9.1"
+    ],
+    "query": "Co-occurring BEAM_FAILURE and UE_MASS_DETACH at Cell-49."
+  },
+  {
+    "scenario_id": "EVAL_20",
+    "fault_type": "PRB_CONGESTION+PRACH_CONGESTION",
+    "cell": "Cell-34",
+    "timestamp": "2024-03-18 00:00 UTC",
+    "description": "Co-occurring: PRB utilization exceeded 90%, throughput severely degraded AND RRC connection setup failure spike, RACH preamble collision rate high",
+    "anomaly_vector": {
+      "ho_sr_dev": -15.625,
+      "rsrp_dev": 0.0,
+      "rsrq_dev": -2.0,
+      "sinr_dev": -1.0,
+      "throughput_dev": -7.5,
+      "prb_dev": 6.429,
+      "latency_dev": 34.167,
+      "rrc_sr_dev": -30.0,
+      "rrc_reest_dev": 0.0,
+      "rlf_dev": 0.0,
+      "prach_fail_dev": 35.0,
+      "connected_ues_dev": 0.0,
+      "ul_timing_err_dev": 0.0
+    },
+    "expected_clauses": [
+      "TS 38.321 Section 5.1",
+      "TS 38.321 Section 5.4",
+      "TS 38.213 Section 8",
+      "TS 38.214 Section 5.1"
+    ],
+    "query": "Co-occurring PRB_CONGESTION and PRACH_CONGESTION at Cell-34."
+  }
+]

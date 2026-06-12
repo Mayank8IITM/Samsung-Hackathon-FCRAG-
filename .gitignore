@@ -22,10 +22,10 @@ models/tinyllama-1.1b-tele-it/
 models/ms-marco-minilm-l6-v2/
 
 # Data (large — download via script)
-data/teleqna/
-data/tele_eval/
-data/3gpp/*.pdf
-data/oran/*.pdf
+# data/teleqna/
+# data/tele_eval/
+# data/3gpp/*.pdf
+# data/oran/*.pdf
 
 # Keep synthetic data
 !data/simu5g/
