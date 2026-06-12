@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual env (uv)
+.venv/
+
+# Environment
+.env
+.env.local
+
+# Models (large files — download via script)
+models/gemma-2-2b-tele/
+models/llama-3.2-3b-tele-it/
+models/tinyllama-1.1b-tele-it/
+models/ms-marco-minilm-l6-v2/
+
+# Data (large — download via script)
+data/teleqna/
+data/tele_eval/
+data/3gpp/*.pdf
+data/oran/*.pdf
+
+# Keep synthetic data
+!data/simu5g/
+!data/custom_scenarios/
+!data/feedback/.gitkeep
+
+# Results
+results/*.csv
+results/*.json
+
+# Qdrant local storage
+qdrant_storage/
+*.qdrant
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Mac
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
