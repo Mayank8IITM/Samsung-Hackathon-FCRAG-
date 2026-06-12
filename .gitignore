@@ -51,3 +51,4 @@ qdrant_storage/
 .vscode/
 .idea/
 *.swp
+data/tele_eval/Tele-Eval.jsonl
