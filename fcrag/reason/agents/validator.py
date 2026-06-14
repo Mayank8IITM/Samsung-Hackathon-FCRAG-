@@ -37,12 +37,12 @@ def _tokenize_simple(text: str) -> set[str]:
 
 
 def _jaccard_similarity(set_a: set[str], set_b: set[str]) -> float:
-    """Jaccard similarity: |A & B| / |A | B|."""
+    """Subset coverage: |A & B| / |A| to handle short claims matching long chunks."""
     if not set_a or not set_b:
         return 0.0
     intersection = len(set_a & set_b)
-    union = len(set_a | set_b)
-    return intersection / union if union > 0 else 0.0
+    # Use length of claim (set_a) instead of union so short claims matching long contexts don't get penalized.
+    return intersection / len(set_a)
 
 
 def _check_claim_against_contexts(

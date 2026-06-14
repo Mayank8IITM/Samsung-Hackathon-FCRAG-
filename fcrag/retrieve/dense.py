@@ -127,13 +127,14 @@ class DenseRetriever:
         query_vector = self.embedder.embed_query(query)
 
         # Query Qdrant
-        hits = self.client.search(
+        query_response = self.client.query_points(
             collection_name=collection,
-            query_vector=query_vector,
+            query=query_vector,
             limit=top_k,
             with_payload=True,
             score_threshold=self.retrieval_cfg.get("min_score_threshold", 0.0),
         )
+        hits = query_response.points
 
         results: List[RetrievedChunk] = []
         for hit in hits:

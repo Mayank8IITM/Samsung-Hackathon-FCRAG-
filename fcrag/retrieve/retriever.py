@@ -116,7 +116,18 @@ class HybridRetriever:
         "alarm_history",
     ]
 
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super().__new__(cls, *args, **kwargs)
+            cls._instance._initialized = False
+        return cls._instance
+
     def __init__(self):
+        if getattr(self, "_initialized", False):
+            return
+            
         self.config = load_config()
         self.retrieval_cfg = self.config["retrieval"]
 
@@ -125,6 +136,7 @@ class HybridRetriever:
         self.reranker = CrossEncoderReranker()
 
         self._rrf_k = self.retrieval_cfg.get("rrf_k_constant", 60)
+        self._initialized = True
 
     # ------------------------------------------------------------------ #
     # Public API
