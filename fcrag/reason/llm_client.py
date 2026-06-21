@@ -236,15 +236,28 @@ class FCRAGLLMClient:
 
         model_name = self.primary_cfg["name"]
 
-        response = self._hf_client.text_generation(
-            prompt,
-            model=model_name,
-            max_new_tokens=max_tokens,
-            temperature=max(temperature, 0.01),
-            do_sample=temperature > 0,
-        )
-
-        return response.strip()
+        try:
+            response = self._hf_client.chat_completion(
+                messages=[{"role": "user", "content": prompt}],
+                model=model_name,
+                max_tokens=max_tokens,
+                temperature=max(temperature, 0.01),
+            )
+            return response.choices[0].message.content.strip()
+        except Exception as e:
+            # Fallback for models missing tokenizer_config chat templates (e.g., Llama-3.2-Tele-it)
+            if "not a chat model" in str(e).lower():
+                # Use Llama-3 chat template manually
+                formatted_prompt = f"<|begin_of_text|><|start_header_id|>user<|end_header_id|>\n\n{prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n"
+                response = self._hf_client.text_generation(
+                    prompt=formatted_prompt,
+                    model=model_name,
+                    max_new_tokens=max_tokens,
+                    temperature=max(temperature, 0.01),
+                    return_full_text=False
+                )
+                return response.strip()
+            raise e
 
     # ------------------------------------------------------------------ #
     # Tier 3: Template-based fallback
