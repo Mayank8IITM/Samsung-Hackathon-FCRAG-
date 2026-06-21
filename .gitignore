@@ -38,7 +38,9 @@ results/*.json
 
 # Qdrant local storage
 qdrant_storage/
+data/qdrant_db/
 *.qdrant
+data/processed/chunks/*.pkl
 
 # Jupyter
 .ipynb_checkpoints/
