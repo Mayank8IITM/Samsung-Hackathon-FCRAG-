@@ -1,56 +1,76 @@
-# FCRAG 2.0 — Fault-Conditioned Retrieval-Augmented Generation
+# FCRAG (Fault Cause Root Analysis Graph) 
 
-> **Team:** IIT Madras AgentX-10 | Mayank Singh · Ali Jawad  
-> **Hackathon:** Samsung Research — RAG-based Future-Ready Telecom RAN Assistant
+An autonomous, agentic system designed for Root Cause Analysis (RCA) in 3GPP Telecommunications Networks using open-weight Large Language Models and Hybrid Retrieval.
+
+## Hackathon Submission Details
+
+- **Problem Statement Number:** 10
+- **Problem Statement Title:** RAG-based Future-Ready Telecom RAN Assistant
+- **Team Name:** IIT Madras AgentX
+- **Team Members:** Mayank Singh, Ali Jawad
+- **Institute/College Name:** Indian Institute of Technology Madras (IIT Madras)
+- **Final Presentation Google Drive Link:** https://gamma.app/docs/FCRAG-Fault-Conditioned-Retrieval-Augmented-Generation-uthpggx5x4px7cw
+- **Full Submission Demo Video Link:** https://youtu.be/TKJVoD-J0g0?si=CXXDaXS2aeuKgrXB
 
 ---
 
 ## What is FCRAG?
 
-FCRAG is an **autonomous telecom network intelligence system**. It:
-1. Continuously monitors 5G RAN KPI streams
-2. Auto-detects anomalies (no human needed)
-3. Converts faults into retrieval queries autonomously
-4. Retrieves relevant 3GPP/O-RAN specification evidence
-5. Performs multi-agent causal reasoning with citations
-6. Recommends corrective actions — **all in < 4 seconds**
+FCRAG is a **telecom network intelligence system**. It:
+1. Takes an injected network anomaly or manually entered fault.
+2. Converts faults into targeted search queries autonomously using a LangGraph Decomposer agent.
+3. Retrieves relevant 3GPP/O-RAN specification evidence using a Hybrid Retriever (Qdrant Dense + BM25 Sparse + Cross-Encoder Reranker).
+4. Performs causal reasoning with an open-weight, telecom-specialized LLM (`Llama-3.2-3B-Tele-it`).
+5. Validates all claims against retrieved evidence to ensure zero hallucinations.
+6. Recommends corrective actions — **all in < 5 seconds**.
 
 ---
 
-## Quick Start
+## Installation & Setup Guide
 
+### 1. Prerequisites
+- **Python 3.11+** installed on your system.
+- **Git** installed.
+- (Optional but recommended) `uv` or `virtualenv` for managing Python environments.
+
+### 2. Clone the Repository
 ```bash
-1. **Clone the Repository** and navigate to the root directory.
-2. **Install Dependencies:**
-   Ensure you have a Python 3.11 environment active. We recommend using `uv` or `pip`:
-   ```bash
-   pip install -r requirements.txt
-   ```
-   *(Note: Plotly, Pandas, and Numpy are required for the new interactive UI)*
-3. **Environment Setup:**
-   Create a `.env` file in the root directory and add your Hugging Face API key:
-   ```env
-   HUGGINGFACE_API_KEY=your_api_key_here
-   ```
+git clone https://github.com/your-username/Samsung-Hackathon-FCRAG.git
+cd Samsung-Hackathon-FCRAG
+```
+
+### 3. Install Dependencies
+Ensure your Python virtual environment is active, then install the required dependencies:
+```bash
+pip install -r requirements.txt
+```
+*(Note: Plotly, Pandas, Streamlit, and LangGraph are required for the interactive UI and agentic workflow.)*
+
+### 4. Environment Setup
+Create a `.env` file in the root directory and add your Hugging Face API key. This is required to access the inference endpoints for the reasoning LLM.
+```env
+HUGGINGFACE_API_KEY=your_api_key_here
+```
+
+### 5. Launch the NOC Dashboard
+Start the Streamlit application to access the interactive dashboard:
+```bash
+streamlit run src/app.py
+```
+The application will be available at `http://localhost:8501`.
 
 ---
 
-## Architecture
+## System Architecture
 
+Our solution utilizes an agentic workflow orchestrated by LangGraph:
 ```
-KPI Stream → IsolationForest/EWMA → FSE → Hybrid Retrieval (Qdrant+BM25+Reranker)
-           → LangGraph (Decomposer→Retriever→Reasoning→Validator) → Cited RCA Output
+Anomaly Injection → LangGraph DAG (Decompose → Retrieve → Reason → Validate)
+  └─ Hybrid Retrieval (Qdrant Dense + BM25 Sparse)
+  └─ RRF Fusion + ms-marco-MiniLM-L-6-v2 Cross-Encoder Reranker
+  └─ Llama-3.2-3B-Tele-it Reasoning LLM
+  └─ Jaccard Overlap Claim Validation
 ```
-
-### 5-Stage Pipeline
-
-| Stage | Name | Key Tech |
-|---|---|---|
-| 1 | Sense | IsolationForest + EWMA |
-| 2 | Encode | Fault Signature Encoder (FSE) + TAAE |
-| 3 | Retrieve | Qdrant + BM25 + MiniLM Reranker |
-| 4 | Reason | LangGraph + Llama-3.2-3B-Tele-it |
-| 5 | Explain | Causal Graph + Cited Actions |
 
 ---
 
@@ -58,12 +78,9 @@ KPI Stream → IsolationForest/EWMA → FSE → Hybrid Retrieval (Qdrant+BM25+Re
 
 | Model | Role | Source |
 |---|---|---|
-| Gemma-2-2B-Tele | Embedding extractor | AliMaatouk/Gemma-2-2B-Tele |
 | Llama-3.2-3B-Tele-it | Reasoning LLM (primary) | AliMaatouk/Llama-3.2-3B-Tele-it |
-| TinyLlama-1.1B-Tele-it | Reasoning LLM (fallback) | AliMaatouk/TinyLlama-1.1B-Tele-it |
+| all-MiniLM-L6-v2 | Dense Embedding extractor | sentence-transformers |
 | ms-marco-MiniLM-L-6-v2 | Cross-encoder reranker | cross-encoder/ms-marco-MiniLM-L-6-v2 |
-| IsolationForest | Anomaly detection | scikit-learn |
-| FSE (custom) | KPI→embedding mapping | Built by team |
 
 ---
 
@@ -72,10 +89,8 @@ KPI Stream → IsolationForest/EWMA → FSE → Hybrid Retrieval (Qdrant+BM25+Re
 | Dataset | Source | Use |
 |---|---|---|
 | TeleQnA | netop-team/TeleQnA | Primary benchmark (10K MCQs) |
-| Tele-Eval | AliMaatouk/Tele-Eval | Generation quality eval |
-| 3GPP TS 38.xxx | 3gpp.org | Knowledge base |
-| O-RAN WG1/WG3 | o-ran.org | Knowledge base |
-| Simu5G (synthetic) | Generated by team | Fault simulation (150 scenarios) |
+| 3GPP TS 38.xxx / TS 23.xxx | 3gpp.org | Knowledge base |
+| Simu5G (synthetic) | Generated by team | Fault simulation scenarios |
 | Custom 20-fault | Built by team | Retrieval benchmarking |
 
 ---
@@ -93,22 +108,14 @@ KPI Stream → IsolationForest/EWMA → FSE → Hybrid Retrieval (Qdrant+BM25+Re
 
 ## Project Structure
 
-```
-fcrag/            ← Core package
-├── ingest/       ← PDF chunking, embedding, indexing
-├── sense/        ← Anomaly detection + multi-cell correlation
-├── encode/       ← FSE neural network + TAAE
-├── retrieve/     ← Hybrid retrieval + explanation layer
-├── reason/       ← LangGraph agents + tiered response
-├── explain/      ← Causal graph + output formatting
-├── feedback/     ← Active learning feedback loop
-├── eval/         ← Benchmarking suite
-└── api/          ← FastAPI endpoints
-config/           ← settings.yaml + acronym dict
-data/             ← 3GPP PDFs, Simu5G, TeleQnA, custom scenarios
-models/           ← Downloaded HuggingFace models + FSE checkpoint
-scripts/          ← Setup, ingestion, evaluation scripts
-demo/             ← Streamlit dashboard
-tests/            ← pytest test suite
-results/          ← Evaluation reports
+```text
+fcrag/            ← Project Root
+├── src/          ← Core source code
+│   ├── app.py    ← Main Streamlit dashboard application
+│   ├── fcrag/    ← Logic modules (retrieval, reasoning, etc.)
+│   └── scripts/  ← Utilities for indexing and evaluation
+├── data/         ← Qdrant DB, processed indexes, custom scenarios
+├── docs/         ← Technical documentation and system architecture
+├── requirements.txt
+└── README.md
 ```

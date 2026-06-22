@@ -8,6 +8,7 @@ __pycache__/
 dist/
 build/
 
+
 # Virtual env (uv)
 .venv/
 
@@ -35,6 +36,7 @@ models/ms-marco-minilm-l6-v2/
 # Results
 results/*.csv
 results/*.json
+results/*.md 
 
 # Qdrant local storage
 qdrant_storage/

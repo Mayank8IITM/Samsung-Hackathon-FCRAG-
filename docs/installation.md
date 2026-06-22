@@ -65,13 +65,8 @@ To launch the Streamlit dashboard:
 ```bash
 streamlit run src/app.py
 ```
-This will open the web interface (usually at `http://localhost:8501`). On the first run, it will initialize the Cross-Encoder model.
+This will open the web interface . On the first run, it will initialize the Cross-Encoder model.
 
-### Command-Line Backend Benchmark
-To run the automated test suite that benchmarks latency, MRR, and Recall metrics without the UI:
-```bash
-python src/scripts/test_rag.py
-```
 
 ## Troubleshooting
 
