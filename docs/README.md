@@ -1,4 +1,4 @@
-# FCRAG 2.0 (Fault Cause Root Analysis Graph) 📡
+# FCRAG  (Fault Cause Root Analysis Graph) 📡
 
 An autonomous, agentic system designed for Root Cause Analysis (RCA) in 3GPP Telecommunications Networks using open-weight Large Language Models and Hybrid Retrieval.
 
