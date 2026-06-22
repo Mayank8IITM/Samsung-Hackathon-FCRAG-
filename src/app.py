@@ -9,7 +9,6 @@ import plotly.graph_objects as go
 import plotly.express as px
 from pathlib import Path
 
-# ─── Path Setup ──────────────────────────────────────────────────────────────
 # src/app.py -> parent is src/ -> parent.parent is project root
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
@@ -17,15 +16,13 @@ sys.path.insert(0, str(ROOT / "src"))
 from fcrag.retrieve.retriever import HybridRetriever
 from fcrag.reason.llm_client import FCRAGLLMClient
 
-# ─── Page Config ─────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="FCRAG 2.0 | Telecom RCA Engine",
-    page_icon="📡",
+    page_title="FCRAG  | Telecom RCA Engine",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
 
-# ─── Custom CSS ──────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -57,24 +54,27 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle at 30% 50%, rgba(0,200,255,0.05) 0%, transparent 60%);
+    background: radial-gradient(circle at 30% 50%, rgba(0,200,255,0.08) 0%, transparent 60%);
     pointer-events: none;
 }
 .noc-title {
-    font-size: 2.2em;
-    font-weight: 800;
-    background: linear-gradient(90deg, #00c8ff, #0096ff, #00e5ff);
+    font-size: 3.2em;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffffff, #00c8ff, #0055ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin: 0 0 6px 0;
-    letter-spacing: -0.5px;
+    margin: 0 0 10px 0;
+    letter-spacing: -1.2px;
+    text-shadow: 0 0 40px rgba(0,200,255,0.2);
 }
 .noc-subtitle {
-    color: #64748b;
-    font-size: 0.95em;
-    font-weight: 400;
+    color: #94a3b8;
+    font-size: 1.1em;
+    font-weight: 500;
     margin: 0;
+    max-width: 600px;
+    line-height: 1.5;
 }
 .live-badge {
     display: inline-flex;
@@ -189,26 +189,42 @@ html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
     display: flex;
     align-items: flex-start;
     gap: 14px;
-    padding: 10px 0;
+    padding: 12px 0;
     border-left: 2px solid rgba(0,200,255,0.15);
-    padding-left: 16px;
-    margin-left: 8px;
+    padding-left: 20px;
+    margin-left: 10px;
     position: relative;
+    transition: all 0.3s;
 }
 .timeline-step::before {
     content: '';
     position: absolute;
-    left: -5px;
-    top: 14px;
-    width: 8px; height: 8px;
+    left: -7px;
+    top: 16px;
+    width: 12px; height: 12px;
     border-radius: 50%;
-    background: #00c8ff;
-    border: 2px solid #080c14;
+    background: #1e293b;
+    border: 2px solid #334155;
+    transition: all 0.3s;
 }
-.timeline-step.done::before  { background: #10b981; }
-.timeline-step.error::before { background: #ef4444; }
-.timeline-label { font-size: 0.88em; font-weight: 600; color: #e2e8f0; }
-.timeline-time  { font-size: 0.75em; color: #64748b; font-family:'JetBrains Mono',monospace; }
+.timeline-step.done { border-left-color: #10b981; }
+.timeline-step.done::before  { background: #10b981; border-color: #064e3b; box-shadow: 0 0 10px rgba(16,185,129,0.4); }
+.timeline-step.error { border-left-color: #ef4444; }
+.timeline-step.error::before { background: #ef4444; border-color: #7f1d1d; box-shadow: 0 0 10px rgba(239,68,68,0.4); }
+.timeline-step.running { border-left-color: #00c8ff; }
+.timeline-step.running::before { 
+    background: #00c8ff; 
+    border-color: #082f49; 
+    box-shadow: 0 0 15px rgba(0,200,255,0.6);
+    animation: pulse-blue 1.5s infinite; 
+}
+@keyframes pulse-blue {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 200, 255, 0.7); }
+    70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(0, 200, 255, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 200, 255, 0); }
+}
+.timeline-label { font-size: 0.95em; font-weight: 600; color: #f8fafc; display: flex; align-items: center; gap: 8px;}
+.timeline-time  { font-size: 0.8em; color: #94a3b8; font-family:'JetBrains Mono',monospace; margin-top:4px;}
 
 /* ── Metric Strip ───────────────────────────── */
 .metric-strip {
@@ -255,20 +271,29 @@ div[data-testid="stButton"] > button[kind="primary"]:hover {
 }
 
 /* ── Tab Styling ─────────────────────────────── */
-[data-baseweb="tab-list"] { background: transparent !important; gap: 4px; }
+[data-baseweb="tab-list"] { background: transparent !important; gap: 12px; }
 [data-baseweb="tab"] {
-    background: rgba(255,255,255,0.04) !important;
-    border: 1px solid rgba(255,255,255,0.08) !important;
-    border-radius: 6px !important;
-    color: #64748b !important;
-    font-size: 0.85em !important;
-    font-weight: 500 !important;
-    padding: 6px 16px !important;
+    background: rgba(15,23,42,0.6) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 12px !important;
+    color: #94a3b8 !important;
+    font-size: 0.95em !important;
+    font-weight: 600 !important;
+    padding: 12px 24px !important;
+    transition: all 0.2s !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
+}
+[data-baseweb="tab"]:hover {
+    background: rgba(30,41,59,0.8) !important;
+    color: #f8fafc !important;
+    border-color: rgba(255,255,255,0.2) !important;
+    transform: translateY(-2px);
 }
 [aria-selected="true"][data-baseweb="tab"] {
-    background: rgba(0,200,255,0.12) !important;
-    border-color: rgba(0,200,255,0.3) !important;
-    color: #00c8ff !important;
+    background: linear-gradient(135deg, #0ea5e9, #2563eb) !important;
+    border-color: #3b82f6 !important;
+    color: #ffffff !important;
+    box-shadow: 0 8px 16px rgba(37,99,235,0.25) !important;
 }
 
 /* ── Streamlit Metric Fix (force visible text) ── */
@@ -349,7 +374,6 @@ div[data-testid="stButton"] > button[kind="primary"]:hover {
 """, unsafe_allow_html=True)
 
 
-# ─── Helpers ─────────────────────────────────────────────────────────────────
 def generate_mock_timeseries_data():
     """Generates mock timeseries data for the NOC monitor visualization."""
     times = pd.date_range(end=pd.Timestamp.now(), periods=60, freq="s")
@@ -442,7 +466,6 @@ def parse_rca_sections(text: str):
     return sections
 
 
-# ─── Initialization ───────────────────────────────────────────────────────────
 @st.cache_resource(show_spinner=False)
 def init_system():
     retriever = HybridRetriever()
@@ -453,7 +476,6 @@ def init_system():
     return retriever, llm, scenarios
 
 
-# ─── Session State Defaults ───────────────────────────────────────────────────
 for key, default in [
     ("run_analysis", False),
     ("current_query", ""),
@@ -467,12 +489,10 @@ for key, default in [
         st.session_state[key] = default
 
 
-# ─── Boot ─────────────────────────────────────────────────────────────────────
-with st.spinner("⚙️  Initializing FCRAG 2.0 Engine…"):
+with st.spinner("  Initializing FCRAG Engine…"):
     retriever, llm, scenarios = init_system()
 
 
-# ─── System status bar (inline, no sidebar) ──────────────────────────────────
 tier_name = llm._tier_name() if hasattr(llm, "_tier_name") else "HF Inference API"
 st.markdown(f"""
 <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:6px;">
@@ -492,22 +512,72 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 
-# ─── Main Area ────────────────────────────────────────────────────────────────
-
-# Header
+# Hero / Main Heading
 st.markdown("""
-<div class="noc-header">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
-        <div>
-            <p class="noc-title">FCRAG 2.0 NOC Dashboard</p>
-            <p class="noc-subtitle">Autonomous 3GPP Fault Root Cause Analysis via Hybrid RAG + Open LLM</p>
-        </div>
-        <span class="live-badge"><span class="live-dot"></span> LIVE TELEMETRY</span>
-    </div>
+<div style="
+    background: linear-gradient(135deg, #020817 0%, #0a1628 50%, #020817 100%);
+    border: 1px solid rgba(0,200,255,0.12);
+    border-radius: 20px;
+    padding: 52px 48px 44px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+">
+  <!-- glow blobs -->
+  <div style="position:absolute;top:-80px;right:-80px;width:340px;height:340px;
+              background:radial-gradient(circle,rgba(0,200,255,0.08) 0%,transparent 70%);
+              pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-60px;left:-40px;width:260px;height:260px;
+              background:radial-gradient(circle,rgba(0,85,255,0.07) 0%,transparent 70%);
+              pointer-events:none;"></div>
+
+  <!-- eyebrow -->
+  <div style="display:inline-flex;align-items:center;gap:8px;
+              background:rgba(0,200,255,0.07);border:1px solid rgba(0,200,255,0.2);
+              border-radius:100px;padding:5px 16px;margin-bottom:22px;">
+    <span style="width:7px;height:7px;background:#10b981;border-radius:50%;
+                 display:inline-block;animation:pulse-green 1.5s ease-in-out infinite;"></span>
+    <span style="color:#00c8ff;font-size:0.75em;font-weight:700;letter-spacing:1.5px;
+                 text-transform:uppercase;">Samsung EnnovateX AX Hackathon</span>
+  </div>
+
+  <!-- main title -->
+  <h1 style="font-size:4.2em;font-weight:900;margin:0 0 14px;
+             background:linear-gradient(135deg, #ffffff 0%, #00c8ff 50%, #3b82f6 100%);
+             -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+             background-clip:text;letter-spacing:-2px;line-height:1.05;">
+    FCRAG 
+  </h1>
+
+  <!-- tagline -->
+  <p style="font-size:1.25em;color:#94a3b8;margin:0 0 22px;font-weight:500;max-width:640px;line-height:1.6;">
+    <strong style="color:#e2e8f0;">Fault Cause Root Analysis Graph</strong> &mdash;
+    Autonomous Root Cause Analysis for 5G / LTE networks,
+    powered by Hybrid RAG and an open-weight telecom-tuned LLM.
+  </p>
+
+  <!-- feature chips -->
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <span style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);
+                 color:#10b981;padding:5px 14px;border-radius:100px;font-size:0.8em;font-weight:600;">
+       Hybrid BM25 + Qdrant Retrieval
+    </span>
+    <span style="background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.25);
+                 color:#00c8ff;padding:5px 14px;border-radius:100px;font-size:0.8em;font-weight:600;">
+       Llama-3.2-3B-Tele-it
+    </span>
+    <span style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.25);
+                 color:#a78bfa;padding:5px 14px;border-radius:100px;font-size:0.8em;font-weight:600;">
+       LangGraph DAG Orchestration
+    </span>
+    <span style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);
+                 color:#f59e0b;padding:5px 14px;border-radius:100px;font-size:0.8em;font-weight:600;">
+       3GPP Specification Grounded
+    </span>
+  </div>
 </div>
 """, unsafe_allow_html=True)
 
-# ── KPI Strip ──────────────────────────────────────────────────────────────────
 k1, k2, k3, k4 = st.columns(4)
 specs = [
     (k1, "Avg Recall@5", "91.2 %"),
@@ -525,8 +595,7 @@ for col, label, val in specs:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# ── Live Telemetry Monitor ─────────────────────────────────────────────────────
-with st.expander("📊 Live Network Telemetry Monitor", expanded=True):
+with st.expander(" Live Network Telemetry Monitor", expanded=True):
     st.markdown('<div class="section-heading">Real-time Cell Tower Metrics (Simulated)</div>', unsafe_allow_html=True)
     df_live = generate_mock_timeseries_data()
 
@@ -553,8 +622,7 @@ with st.expander("📊 Live Network Telemetry Monitor", expanded=True):
         st.plotly_chart(make_sparkline(df_live, "Throughput (Mbps)", color),
                         use_container_width=True, config={"displayModeBar": False})
 
-# ─── Inline Control Panel ───────────────────────────────────────────────────
-st.markdown('<div class="control-title">🚨 Anomaly Injection Controls</div>', unsafe_allow_html=True)
+st.markdown('<div class="control-title"> Anomaly Injection Controls</div>', unsafe_allow_html=True)
 
 ctrl_l, ctrl_r = st.columns([1, 1], gap="large")
 
@@ -562,7 +630,7 @@ with ctrl_l:
     st.markdown("**Auto-detect from Scenario Library**")
     st.caption("Picks a random pre-defined 3GPP network fault and runs the full RCA pipeline.")
     st.markdown('<div class="anomaly-btn">', unsafe_allow_html=True)
-    if st.button("🚨 Detect Random Network Anomaly", type="primary", use_container_width=True):
+    if st.button(" Detect Random Network Anomaly", type="primary", use_container_width=True):
         scenario = random.choice(scenarios)
         st.session_state.current_query = scenario["fault_description"]
         st.session_state.scenario_data = scenario
@@ -570,27 +638,16 @@ with ctrl_l:
         st.rerun()
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # if scenarios:
-    #     st.markdown("**Or pick a specific scenario:**")
-    #     for sc in scenarios[:5]:
-    #         fault_id = sc.get("scenario_id", "—")
-    #         desc = sc.get("fault_description", "")[:70]
-    #         if st.button(f"⚡ {fault_id}: {desc}…", key=f"sc_{fault_id}", use_container_width=True):
-    #             st.session_state.current_query = sc["fault_description"]
-    #             st.session_state.scenario_data = sc
-    #             st.session_state.run_analysis = True
-    #             st.rerun()
-
 with ctrl_r:
     st.markdown("**Manual Fault Description**")
     st.caption("Describe a network anomaly in plain text to run a custom RCA analysis.")
     manual_query = st.text_area(
         "Manual Query",
-        placeholder="e.g. 'Persistent handover failures detected on Cell 42. A3 offset may be too aggressive, causing ping-pong handovers and RLF events…'",
+        placeholder="e.g. 'Persistent handover failures detected on Cell 42. A3 offset may be too aggressive…'",
         height=120,
         label_visibility="collapsed",
     )
-    if st.button("🔍 Analyze Manual Fault", disabled=not manual_query, use_container_width=True):
+    if st.button(" Analyze Manual Fault", disabled=not manual_query, use_container_width=True):
         st.session_state.current_query = manual_query
         st.session_state.scenario_data = None
         st.session_state.run_analysis = True
@@ -608,36 +665,64 @@ with ctrl_r:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# ─── RCA Engine ───────────────────────────────────────────────────────────────
 if st.session_state.run_analysis:
     query = st.session_state.current_query
     st.session_state.run_analysis = False
 
     st.markdown(f"""
-    <div style="background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.25);
-                border-left:4px solid #ef4444;border-radius:8px;padding:14px 18px;margin-bottom:16px;">
-        <div style="font-size:0.75em;color:#ef4444;font-weight:700;margin-bottom:4px;">⚠ ANOMALY DETECTED</div>
-        <div style="color:#fca5a5;font-size:0.92em;">{query}</div>
+    <div style="background:linear-gradient(135deg,rgba(239,68,68,0.12),rgba(185,28,28,0.06));
+                border:1px solid rgba(239,68,68,0.35);
+                border-left:5px solid #ef4444;
+                border-radius:14px;padding:22px 28px;margin-bottom:24px;
+                box-shadow:0 8px 32px rgba(239,68,68,0.12);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <span style="background:#ef4444;color:#fff;font-size:0.72em;font-weight:800;
+                       text-transform:uppercase;letter-spacing:1px;padding:3px 10px;
+                       border-radius:100px;"> Anomaly Detected</span>
+          <span style="color:#64748b;font-size:0.78em;font-family:'JetBrains Mono',monospace;">Starting FCRAG Agentic Pipeline…</span>
+        </div>
+        <div style="color:#fca5a5;font-size:1.05em;font-weight:500;line-height:1.55;">{query}</div>
     </div>
     """, unsafe_allow_html=True)
 
     tl_placeholder = st.empty()
 
     def render_timeline(steps):
-        html = '<div style="margin-bottom:16px;">'
-        for name, status, t in steps:
-            css_cls = "done" if status == "done" else ("error" if status == "error" else "")
-            icon = "✅" if status == "done" else ("❌" if status == "error" else "⏳")
-            time_str = f"({t:.2f}s)" if t else ""
-            html += f"""
-            <div class="timeline-step {css_cls}">
-                <div>
-                    <div class="timeline-label">{icon} {name}</div>
-                    <div class="timeline-time">{time_str}</div>
-                </div>
-            </div>"""
-        html += "</div>"
-        tl_placeholder.markdown(html, unsafe_allow_html=True)
+        ICONS  = {"done": "", "error": "", "running": "", "pending": ""}
+        LABELS = {"done": "Complete", "error": "Failed", "running": "Running…", "pending": "Waiting"}
+        COLORS = {"done": "#10b981", "error": "#ef4444", "running": "#00c8ff", "pending": "#334155"}
+        BG     = {"done": "rgba(16,185,129,0.06)", "error": "rgba(239,68,68,0.06)",
+                  "running": "rgba(0,200,255,0.07)", "pending": "rgba(255,255,255,0.015)"}
+
+        html_lines = []
+        html_lines.append('<div style="margin-bottom:28px;">')
+        html_lines.append('<div style="color:#64748b;font-size:0.72em;text-transform:uppercase;font-weight:700;letter-spacing:2px;margin-bottom:18px;display:flex;align-items:center;gap:10px;">')
+        html_lines.append('<span style="flex:1;height:1px;background:rgba(255,255,255,0.06);"></span>')
+        html_lines.append(' AGENT EXECUTION GRAPH')
+        html_lines.append('<span style="flex:1;height:1px;background:rgba(255,255,255,0.06);"></span>')
+        html_lines.append('</div>')
+
+        for idx, (name, status, t) in enumerate(steps):
+            c = COLORS[status]
+            bg = BG[status]
+            icon = ICONS[status]
+            badge_txt = LABELS[status]
+            step_num = f"{idx+1:02d}"
+            time_str = f"{t:.3f} ms" if t is not None else ""
+            pulse_style = "animation:pulse-blue 1.5s infinite;" if status == "running" else ""
+            
+            latency_html = ""
+            if time_str:
+                latency_html = f'<div style="background:{c}11;border:1px solid {c}44;border-radius:10px;padding:8px 16px;font-family:\'JetBrains Mono\',monospace;font-size:0.88em;font-weight:700;color:{c};white-space:nowrap;box-shadow:0 2px 8px {c}22;"> {time_str}</div>'
+
+            html_lines.append(f'<div style="display:flex;align-items:center;gap:18px;background:{bg};border:1px solid {c}30;border-left:5px solid {c};border-radius:14px;padding:18px 22px;margin-bottom:12px;box-shadow:0 4px 20px {c}10;">')
+            html_lines.append(f'<div style="min-width:42px;height:42px;border-radius:50%;background:{c}20;border:2.5px solid {c};display:flex;align-items:center;justify-content:center;font-size:0.82em;font-weight:900;color:{c};box-shadow:0 0 16px {c}30;{pulse_style}">{step_num}</div>')
+            html_lines.append(f'<div style="flex:1;"><div style="font-size:1.05em;font-weight:700;color:#f8fafc;margin-bottom:5px;">{icon}&nbsp; {name}</div><div style="font-size:0.8em;color:#64748b;">Status: <span style="color:{c};font-weight:700;">{badge_txt}</span></div></div>')
+            html_lines.append(latency_html)
+            html_lines.append('</div>')
+
+        html_lines.append("</div>")
+        tl_placeholder.markdown("".join(html_lines), unsafe_allow_html=True)
 
     steps = [
         ("Hybrid Retrieval (BM25 + Dense Vector)", "running", None),
@@ -683,8 +768,8 @@ if st.session_state.run_analysis:
         f"Reasoned RCA:"
     )
     t_llm = time.perf_counter()
-    with st.spinner("Generating root cause analysis…"):
-        rca_report = llm.generate(prompt, max_tokens=300)
+    with st.spinner("Generating detailed root cause analysis…"):
+        rca_report = llm.generate(prompt, max_tokens=1024)
     llm_time = time.perf_counter() - t_llm
 
     steps[3] = (steps[3][0], "done", llm_time)
@@ -702,22 +787,20 @@ if st.session_state.run_analysis:
     })
 
 
-# ─── Results Panel ────────────────────────────────────────────────────────────
 if st.session_state.rca_result:
     rca_report = st.session_state.rca_result
     results = st.session_state.rca_results_list
     timings = st.session_state.rca_timings
 
-    tab_dash, tab_rca, tab_evidence = st.tabs(["📊 Dashboard", "🧠 RCA Report", "🔍 Evidence"])
+    tab_dash, tab_rca, tab_evidence = st.tabs([" Dashboard", " RCA Report", " Evidence"])
 
-    # ── Dashboard Tab ──────────────────────────────────────────────────────────
     with tab_dash:
         st.markdown('<div class="section-heading">Analysis Performance</div>', unsafe_allow_html=True)
         m1, m2, m3, m4 = st.columns(4)
         m1.metric("Retrieved Clauses", len(results))
-        m2.metric("Retrieval Time", f"{timings['retrieval']*1000:.0f} ms")
-        m3.metric("LLM Time", f"{timings['llm']:.2f} s")
-        m4.metric("Total Time", f"{timings['total']:.2f} s")
+        m2.metric("Retrieval Time", f"{timings['retrieval']:.3f} ms")
+        m3.metric("LLM Time", f"{timings['llm']:.2f} ms")
+        m4.metric("Total Time", f"{timings['total']:.2f} ms")
 
         st.markdown("<br>", unsafe_allow_html=True)
         st.markdown('<div class="section-heading">Reranker Score Distribution</div>', unsafe_allow_html=True)
@@ -766,41 +849,34 @@ if st.session_state.rca_result:
         )
         st.plotly_chart(pie_fig, use_container_width=True, config={"displayModeBar": False})
 
-    # ── RCA Tab ────────────────────────────────────────────────────────────────
     with tab_rca:
         st.markdown('<div class="section-heading">Automated Root Cause Analysis</div>', unsafe_allow_html=True)
         sections = parse_rca_sections(rca_report)
 
-        # ── Structured sections (when LLM follows the prompt format) ──
         has_structured = any(sections.values())
 
         if sections["problem"]:
             st.markdown(f"""
             <div class="rca-section">
-                <h4>⚠ Problem Description</h4>
+                <h4> Problem Description</h4>
                 <div class="rca-body">{sections["problem"].replace(chr(10), "<br>")}</div>
             </div>""", unsafe_allow_html=True)
 
         if sections["root_cause"]:
             st.markdown(f"""
             <div class="rca-section" style="border-color:rgba(245,158,11,0.2);border-left-color:#f59e0b;">
-                <h4 style="color:#f59e0b;">🔍 Root Cause Analysis</h4>
+                <h4 style="color:#f59e0b;"> Root Cause Analysis</h4>
                 <div class="rca-body">{sections["root_cause"].replace(chr(10), "<br>")}</div>
             </div>""", unsafe_allow_html=True)
 
         if sections["recommendations"]:
             st.markdown(f"""
             <div class="rca-section" style="border-color:rgba(16,185,129,0.2);border-left-color:#10b981;">
-                <h4 style="color:#10b981;">✅ Recommendations</h4>
+                <h4 style="color:#10b981;"> Recommendations</h4>
                 <div class="rca-body">{sections["recommendations"].replace(chr(10), "<br>")}</div>
             </div>""", unsafe_allow_html=True)
 
-        # ── Full LLM Output — always visible ──────────────────────────
-        st.markdown('<div class="section-heading" style="margin-top:20px;">💬 Full LLM Response</div>', unsafe_allow_html=True)
-        safe_rca = rca_report.replace("<", "&lt;").replace(">", "&gt;")
-        st.markdown(f'<div class="llm-raw">{safe_rca}</div>', unsafe_allow_html=True)
 
-        # ── Ground Truth (if scenario-based) ──────────────────────────
         if st.session_state.get("scenario_data"):
             sc = st.session_state.scenario_data
             st.markdown("---")
@@ -813,7 +889,6 @@ if st.session_state.rca_result:
                 clauses = sc.get("relevant_clauses", [])
                 st.markdown(f'**Ground Truth Clauses:** {", ".join([f"`{c}`" for c in clauses])}')
 
-    # ── Evidence Tab ──────────────────────────────────────────────────────────
     with tab_evidence:
         st.markdown('<div class="section-heading">Retrieved 3GPP Specification Clauses</div>', unsafe_allow_html=True)
         for i, res in enumerate(results):
