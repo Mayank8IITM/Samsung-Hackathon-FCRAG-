@@ -20,26 +20,18 @@ FCRAG is an **autonomous telecom network intelligence system**. It:
 ## Quick Start
 
 ```bash
-# 1. Install dependencies
-uv add -r requirements.txt
-
-# 2. Scaffold project structure
-python scripts/scaffold_project.py
-
-# 3. Download datasets and generate synthetic data
-python scripts/download_data.py
-
-# 4. Place 3GPP PDFs manually (see instructions printed by step 3)
-
-# 5. Run full ingestion pipeline
-python scripts/ingest_all.py
-
-# 6. Launch demo dashboard
-streamlit run demo/app.py
-
-# 7. Or use the API
-uvicorn fcrag.api.main:app --reload
-```
+1. **Clone the Repository** and navigate to the root directory.
+2. **Install Dependencies:**
+   Ensure you have a Python 3.11 environment active. We recommend using `uv` or `pip`:
+   ```bash
+   pip install -r requirements.txt
+   ```
+   *(Note: Plotly, Pandas, and Numpy are required for the new interactive UI)*
+3. **Environment Setup:**
+   Create a `.env` file in the root directory and add your Hugging Face API key:
+   ```env
+   HUGGINGFACE_API_KEY=your_api_key_here
+   ```
 
 ---
 

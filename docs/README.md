@@ -1,9 +1,9 @@
-# FCRAG 2.0 (Fault Cause Root Analysis Graph) 📡
+# FCRAG  (Fault Cause Root Analysis Graph) 📡
 
 An autonomous, agentic system designed for Root Cause Analysis (RCA) in 3GPP Telecommunications Networks using open-weight Large Language Models and Hybrid Retrieval.
 
 ## 🌟 Salient Features
-- **Autonomous Anomaly Detection & RCA:** Automatically parses 3GPP network faults and generates diagnostic reports detailing the Problem Statement, Root Cause, and Actionable Recommendations.
+- **Autonomous RCA:** Generates diagnostic reports detailing the Problem Statement, Root Cause, and Actionable Recommendations for injected network faults.
 - **Agentic Workflow:** Utilizes specialized agents (Decomposer, Hybrid Retriever, Reasoner) built on an autonomous execution graph.
 - **Hybrid Retrieval System:** Fuses BM25 (Sparse) and Qdrant (Dense Vector) search, refined by a highly accurate Cross-Encoder, to precisely fetch relevant 3GPP specification clauses.
 - **NOC Interactive Dashboard:** A highly modern, interactive Streamlit UI built with a Network Operations Center aesthetic, complete with live telemetry visualizations and performance dials.

@@ -9,7 +9,7 @@ This document outlines the Open-Source Software (OSS) libraries and frameworks s
 | **Language** | Python | `>=3.11` | Primary language for data manipulation, AI inference, and backend logic. | [python.org](https://www.python.org/) |
 | **Frontend/UI** | Streamlit | `>=1.38.0` | Creates the interactive Network Operations Center (NOC) dashboard (`src/app.py`). Chosen for its rapid prototyping capabilities in Python. | [streamlit.io](https://streamlit.io/) |
 | **Visualizations** | Plotly | `>=5.24.0` | Generates the real-time telemetry sparklines, bar charts for reranker scores, and source breakdown pie charts within the NOC dashboard. | [plotly.com](https://plotly.com/) |
-| **Data Processing** | Pandas | `>=2.2.0` | Handles CSV/JSON parsing for KPI streams, baseline extraction, and generating mock timeseries data for the UI. | [pandas.pydata.org](https://pandas.pydata.org/) |
+| **Data Processing** | Pandas | `>=2.2.0` | Handles CSV/JSON parsing, baseline extraction, and generating mock timeseries data for the UI. | [pandas.pydata.org](https://pandas.pydata.org/) |
 
 ## Agentic AI & RAG Pipeline
 
